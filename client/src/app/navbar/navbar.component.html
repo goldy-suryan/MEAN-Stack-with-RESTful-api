@@ -1,0 +1,18 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">MEAN Stack</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/home']">Home</a></li>
+      <li><a>About</a></li>
+      <li><a>Blog</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/signup']"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
