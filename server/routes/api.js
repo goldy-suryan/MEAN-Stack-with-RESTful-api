@@ -22,17 +22,17 @@ passport.use("local.signup", new Strategy({
     passwordField: "password",
     passReqToCallback: true
 }, (req, username, password, done) => {
-    User.findOne({username: username}, (err, user) => {
-        if(err) {
-            if(err.code === 11000) {
+    User.findOne({ username: username }, (err, user) => {
+        if (err) {
+            if (err.code === 11000) {
                 return done(err);
             }
             return done(err);
         }
 
-        if(user) { return done(null, false) }
+        if (user) { return done(null, false) }
 
-        if(!user) {
+        if (!user) {
             bcrypt.hash(password, saltRounds, (err, hash) => {
                 var newUser = new User();
                 newUser.username = req.body.username;
@@ -40,9 +40,30 @@ passport.use("local.signup", new Strategy({
                 newUser.password = hash;
 
                 newUser.save((err) => {
-                    if(err) { return done(err) }
+                    if (err) { return done(err) }
                     done(null, newUser);
                 });
+            });
+        }
+    });
+}));
+
+passport.use("local.login", new Strategy({
+    usernameField: "username",
+    passwordField: "password",
+    passReqToCallback: true
+}, (req, username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+        if (err) { return done(err) }
+
+        if (!user) { return done(null, false) }
+
+        if (user) {
+            bcrypt.compare(password, user.password, (err, match) => {
+                if (match) {
+                    return done(null, user);
+                }
+                return done(null, false);
             });
         }
     });
