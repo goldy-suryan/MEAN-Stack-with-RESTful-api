@@ -2,22 +2,35 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let path = require("path");
 let passport = require("passport");
-let flash = require("connect-flash");
-let signUpRoute = require("./server/routes/signupRoute");
+let session = require("express-session");
+let cookieParser = require("cookie-parser");
+let connectMongo = require("connect-mongo")(session);
+let mongoose = require("mongoose");
+let morgan = require("morgan");
+let authRoutes = require("./server/routes/authRoute");
 let app = express();
 
 
 app.use(express.static(path.join(__dirname, "client/dist")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    store: new connectMongo({
+        mongooseConnection: mongoose.connection
+    })
+}))
+app.use(morgan("dev"))
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
 require("./server/routes/api");
 
-app.use("/api", signUpRoute);
+app.use("/api", authRoutes);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/dist/index.html"));
