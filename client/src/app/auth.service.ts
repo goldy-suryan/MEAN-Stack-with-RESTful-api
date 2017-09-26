@@ -8,8 +8,8 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class AuthService {
 
-  signUpUrl: string = "http://localhost:3001/api/signup";
-  loginUrl: string = "http://localhost:3001/api/login";
+  signUpUrl: string = "http://localhost:3001/auth/signup";
+  loginUrl: string = "http://localhost:3001/auth/login";
   username: any;
 
   constructor( private http: Http ) { }

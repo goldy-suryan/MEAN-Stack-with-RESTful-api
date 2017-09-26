@@ -28,9 +28,9 @@ app.use(morgan("dev"))
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./server/routes/api");
+require("./server/routes/auth");
 
-app.use("/api", authRoutes);
+app.use("/auth", authRoutes);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/dist/index.html"));
