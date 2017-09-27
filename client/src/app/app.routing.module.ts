@@ -8,13 +8,16 @@ import { HomeComponent } from "./home/home.component";
 import { NotFoundComponent } from "./notfound/notfound.component";
 import { SignupComponent } from "./signup/signup.component";
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { AuthService } from "./auth.service";
+import { AuthGuard} from "./auth-guard.service";
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full"},
-    { path: "home", component: HomeComponent },
+    { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
+    { path: "logout", component: LogoutComponent },
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -23,7 +26,8 @@ const routes: Routes = [
         HomeComponent,
         NotFoundComponent,
         SignupComponent,
-        LoginComponent
+        LoginComponent,
+        LogoutComponent
     ],
     imports: [ 
         FormsModule,
@@ -33,7 +37,8 @@ const routes: Routes = [
     ],
     exports: [ RouterModule ],
     providers: [
-        AuthService
+        AuthService,
+        AuthGuard
     ]
 })
 
