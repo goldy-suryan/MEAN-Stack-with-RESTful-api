@@ -1,4 +1,5 @@
 import { Component, OnInit , ChangeDetectionStrategy} from '@angular/core';
+declare let $: any;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,6 +12,9 @@ export class NavbarComponent implements OnInit {
   constructor( ) { }
 
   ngOnInit() {
+    $('#myNavbar a').click(function () {
+      $(".navbar-collapse").collapse('hide');
+    });
   }
 
   loggingSession() {
