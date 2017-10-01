@@ -8,6 +8,7 @@ let connectMongo = require("connect-mongo")(session);
 let mongoose = require("mongoose");
 let morgan = require("morgan");
 let authRoutes = require("./server/routes/authRoute");
+let blogRoute = require("./server/routes/blogRoute");
 let app = express();
 
 
@@ -31,6 +32,8 @@ app.use(passport.session());
 require("./server/routes/auth");
 
 app.use("/auth", authRoutes);
+
+app.use("/allblogs", blogRoute);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/dist/index.html"));
