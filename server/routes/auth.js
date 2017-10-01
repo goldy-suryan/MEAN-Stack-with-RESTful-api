@@ -2,7 +2,7 @@ let express = require("express");
 let passport = require("passport");
 let Strategy = require("passport-local").Strategy;
 let mongoose = require("mongoose");
-const User = require("../model/usermodel");
+const User = require("../model/usermodel").userModel;
 let bcrypt = require("bcrypt");
 let saltRounds = 10;
 

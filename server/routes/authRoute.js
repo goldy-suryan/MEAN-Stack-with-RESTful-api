@@ -3,7 +3,7 @@ let route = express.Router();
 let passport = require("passport");
 let bcrypt = require("bcrypt");
 let saltRounds = 10;
-const User = require("../model/usermodel");
+const User = require("../model/usermodel").userModel;
 
 
 route.post("/signup", passport.authenticate("local.signup"), (req, res) => {
