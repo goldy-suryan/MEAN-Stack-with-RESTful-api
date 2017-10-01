@@ -4,22 +4,29 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/Observable/throw";
 import { Observable } from "rxjs/Observable";
+import { ISignup, Ilogin, Iblogs } from "./interfaces";
 
 @Injectable()
 export class AuthService {
 
   signUpUrl: string = "http://localhost:3001/auth/signup";
   loginUrl: string = "http://localhost:3001/auth/login";
-  username: any;
+  blogsUrl: string = "http://localhost:3001/allblogs";
+  user: any;
+  data;
 
   constructor( private http: Http ) { }
 
-  signUp(data) {
+  signUp(data): Observable<ISignup> {
     return this.http.post(this.signUpUrl, data).map((res) => res.json()).catch(this.errorHandler);
   }
 
-  login(user) {
-    return this.http.post(this.loginUrl, user).map((res) => this.username = res.json()).catch(this.errorHandler);
+  login(user): Observable<Ilogin> {
+    return this.http.post(this.loginUrl, user).map((res) => this.user = res.json()).catch(this.errorHandler);
+  }
+
+  getBlogs() {
+    return this.http.get(this.blogsUrl).map((blogs) => blogs.json()).catch(this.errorHandler);
   }
 
   private errorHandler(err: Response ) {
