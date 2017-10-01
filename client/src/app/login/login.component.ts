@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   login(user) {
     this.authService.login(user).subscribe((user) => {
       if(typeof Storage !== undefined) {
-        sessionStorage.setItem("user", user.data.id)
+        sessionStorage.setItem("user", this.authService.user.id)
       }
       this.user = user.username;
       this.router.navigate(['/home']);
