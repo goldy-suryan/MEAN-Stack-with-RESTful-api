@@ -22,4 +22,23 @@ blogRoute.put("/:id", (req, res) => {
     });
 });
 
+blogRoute.delete("/:id", (req, res) => {
+    blogs.findByIdAndRemove(req.params.id, (err, deletedBlog) => {
+        res.json("deleted");
+    })
+});
+
+blogRoute.post("/", (req, res) => {
+    let newBlog = new blogs();
+    newBlog.title = req.body.title;
+    newBlog.description = req.body.description;
+
+    newBlog.save((err) => {
+        if(err) { res.json({ success: false, message: "Something went wrong while posting the blog"})}
+        res.json({ success: true, message: "Blog posted successfully"})
+    });
+});
+
+
+
 module.exports = blogRoute;
