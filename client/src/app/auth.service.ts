@@ -25,16 +25,24 @@ export class AuthService {
     return this.http.post(this.loginUrl, user).map((res) => this.user = res.json()).catch(this.errorHandler);
   }
 
-  getBlogs() {
+  getBlogs(): Observable<Iblogs[]> {
     return this.http.get(this.blogsUrl).map((blogs) => blogs.json()).catch(this.errorHandler);
   }
 
-  getBlog(id) {
+  getBlog(id): Observable<Iblogs> {
     return this.http.get(this.blogsUrl + id).map((blog) => blog.json()).catch(this.errorHandler);
   }
 
-  updateBlog(id, val) {
+  updateBlog(id, val): Observable<Iblogs> {
     return this.http.put(this.blogsUrl+ id, val).map((blog) => blog.json()).catch(this.errorHandler);
+  }
+
+  newBlog(blog): Observable<Iblogs> {
+    return this.http.post(this.blogsUrl, blog).map((blog) => blog.json()).catch(this.errorHandler);
+  }
+
+  deleteblog(id): Observable<Iblogs> {
+    return this.http.delete(this.blogsUrl + id).map((blog)=> blog.json()).catch(this.errorHandler);
   }
 
   private errorHandler(err: Response ) {
