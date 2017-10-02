@@ -15,4 +15,11 @@ blogRoute.get("/:id", (req, res) => {
     });
 });
 
+blogRoute.put("/:id", (req, res) => {
+    blogs.findByIdAndUpdate(req.params.id, { $set: { title: req.body.title, description: req.body.description }}, { upsert: true }, (err, blog) => { 
+        if(err) res.json({ success: false, message: "Something wrong happened while updating the post"})
+            res.json(blog)
+    });
+});
+
 module.exports = blogRoute;
