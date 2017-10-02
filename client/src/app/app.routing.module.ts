@@ -9,9 +9,13 @@ import { NotFoundComponent } from "./notfound/notfound.component";
 import { SignupComponent } from "./signup/signup.component";
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import { BlogsComponent } from './blog/blog.component';
+import { BlogsComponent } from './blogs/blogs.component';
 import { AuthGuard } from "./auth-guard.service";
-import { BlogServiceResolve } from "./blog/blog.service";
+import { BlogsServiceResolve } from "./blogs/blogs.service";
+import { BlogComponent } from './blogs/blog/blog.component';
+import { BlogResolve } from "./blogs/blog/blog.service";
+import { NewBlogComponent } from './blogs/new-blog/new-blog.component';
+
 
 const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -19,7 +23,9 @@ const routes: Routes = [
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
     { path: "logout", component: LogoutComponent },
-    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogServiceResolve } },
+    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve } },
+    { path: "blogs/:id", component: BlogComponent, resolve: { blog: BlogResolve } },
+    { path: "newBlog", component: NewBlogComponent },
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -30,7 +36,9 @@ const routes: Routes = [
         SignupComponent,
         LoginComponent,
         LogoutComponent,
-        BlogsComponent
+        BlogsComponent,
+        BlogComponent,
+        NewBlogComponent
     ],
     imports: [
         HttpModule,
@@ -38,6 +46,9 @@ const routes: Routes = [
         FormsModule,
         RouterModule.forRoot(routes)
     ],
+    entryComponents: [
+        NewBlogComponent
+      ],
     exports: [RouterModule],
     providers: [
         AuthGuard
