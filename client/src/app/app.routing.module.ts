@@ -14,7 +14,6 @@ import { AuthGuard } from "./auth-guard.service";
 import { BlogsServiceResolve } from "./blogs/blogs.service";
 import { BlogComponent } from './blogs/blog/blog.component';
 import { BlogResolve } from "./blogs/blog/blog.service";
-import { NewBlogComponent } from './blogs/new-blog/new-blog.component';
 
 
 const routes: Routes = [
@@ -25,7 +24,6 @@ const routes: Routes = [
     { path: "logout", component: LogoutComponent },
     { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve } },
     { path: "blogs/:id", component: BlogComponent, resolve: { blog: BlogResolve } },
-    { path: "newBlog", component: NewBlogComponent },
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -37,8 +35,7 @@ const routes: Routes = [
         LoginComponent,
         LogoutComponent,
         BlogsComponent,
-        BlogComponent,
-        NewBlogComponent
+        BlogComponent
     ],
     imports: [
         HttpModule,
@@ -46,9 +43,6 @@ const routes: Routes = [
         FormsModule,
         RouterModule.forRoot(routes)
     ],
-    entryComponents: [
-        NewBlogComponent
-      ],
     exports: [RouterModule],
     providers: [
         AuthGuard
