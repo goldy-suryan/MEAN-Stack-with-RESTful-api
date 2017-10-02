@@ -5,14 +5,14 @@ import { AppRoutingModule } from "./app.routing.module";
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from "./auth.service";
-import { BlogServiceResolve } from "./blog/blog.service";
-import { BlogsComponent } from './blog/blog.component';
+import { BlogsServiceResolve } from "./blogs/blogs.service";
+import { BlogResolve } from "./blogs/blog/blog.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    BlogsComponent
+    NavbarComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -20,7 +20,8 @@ import { BlogsComponent } from './blog/blog.component';
   ],
   providers: [
     AuthService,
-    BlogServiceResolve
+    BlogsServiceResolve,
+    BlogResolve
   ],
   bootstrap: [AppComponent]
 })
