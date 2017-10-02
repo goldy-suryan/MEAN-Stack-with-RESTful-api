@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { BlogsServiceResolve } from "./blogs.service";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { Iblogs } from "../interfaces";
-import { NewBlogComponent } from "./new-blog/new-blog.component";
+import { AuthService } from "../auth.service";
+declare let $: any;
 
 @Component({
   selector: 'app-blog',
@@ -11,12 +11,11 @@ import { NewBlogComponent } from "./new-blog/new-blog.component";
 })
 export class BlogsComponent implements OnInit {
 
+  @ViewChild('myModal') myModal: ElementRef;
   blogs: any;
   errMsg: any;
 
-  constructor(private authService: BlogsServiceResolve, private route: ActivatedRoute) {
-
-  }
+  constructor(private route: ActivatedRoute, private service: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.route.data.subscribe((blogs) => {
@@ -24,8 +23,42 @@ export class BlogsComponent implements OnInit {
     });
   }
 
-  newPost() {
+  addBlog(val) {
+    this.service.newBlog(val).subscribe(
+      (blog) => blog,
+      (err) => err
+    );
+    this.close();
+    if (this.router.navigated === false) {
+      this.router.navigateByUrl('/blogs')
+    } else {
+      this.router.navigateByUrl('/login').then(
+        () => {
+          this.router.navigateByUrl('/blogs');
+        }
+      )
+    }
+  }
 
+  deleteBlog(id) {
+    this.service.deleteblog(id).subscribe((blog) => {
+      blog
+    }, (err) => {
+      err
+    })
+    if (this.router.navigated === false) {
+      this.router.navigateByUrl('/blogs')
+    } else {
+      this.router.navigateByUrl('/login').then(
+        () => {
+          this.router.navigateByUrl('/blogs');
+        }
+      )
+    }
+  }
+
+  close() {
+    $(this.myModal.nativeElement).modal('hide');
   }
 
 }

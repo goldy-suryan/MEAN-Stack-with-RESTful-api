@@ -1,7 +1,9 @@
-<div class="container">
+<div class="container" *ngIf="!reRender">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+      <div class="p-xxs">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">New Blog</button>
+      </div>
       <div class="panel panel-primary" *ngFor="let blog of blogs">
         <div class="panel-heading">{{ blog.title }}</div>
         <div class="panel-body">{{ blog.description }}</div>
@@ -10,7 +12,7 @@
           <p><strong>Date: </strong>{{ blog.date | date:"yMd"}}</p>
           <div>
             <a class="btn btn-primary" [routerLink]="['/blogs', blog._id]">Edit</a>
-            <a class="btn btn-danger">Delete</a>
+            <a class="btn btn-danger" (click)="deleteBlog(blog._id)">Delete</a>
           </div>
         </div>
       </div>
@@ -18,7 +20,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal" role="dialog" #myModal>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,19 +28,19 @@
         <h4 class="modal-title">New Blog</h4>
       </div>
       <div class="modal-body">
-        <form action="">
+        <form #blogForm="ngForm">
           <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" name="title" class="form-control">
+            <input type="text" name="title" class="form-control" ngModel>
           </div>
           <div class="form-group">
-            <label for="description">Title:</label>
-            <textarea class="form-control" rows="5" id="comment"></textarea>
+            <label for="description">Description:</label>
+            <textarea class="form-control" name="description" rows="5" id="comment" ngModel></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="confirm()">Post</button>
+        <button type="submit" class="btn btn-primary" (click)="addBlog(blogForm.value)">Post</button>
         <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
       </div>
     </div>
