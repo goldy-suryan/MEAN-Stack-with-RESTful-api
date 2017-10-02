@@ -11,7 +11,7 @@ export class AuthService {
 
   signUpUrl: string = "http://localhost:3001/auth/signup";
   loginUrl: string = "http://localhost:3001/auth/login";
-  blogsUrl: string = "http://localhost:3001/allblogs";
+  blogsUrl: string = "http://localhost:3001/allblogs/";
   user: any;
   data;
 
@@ -27,6 +27,14 @@ export class AuthService {
 
   getBlogs() {
     return this.http.get(this.blogsUrl).map((blogs) => blogs.json()).catch(this.errorHandler);
+  }
+
+  getBlog(id) {
+    return this.http.get(this.blogsUrl + id).map((blog) => blog.json()).catch(this.errorHandler);
+  }
+
+  updateBlog(id, val) {
+    return this.http.put(this.blogsUrl+ id, val).map((blog) => blog.json()).catch(this.errorHandler);
   }
 
   private errorHandler(err: Response ) {
