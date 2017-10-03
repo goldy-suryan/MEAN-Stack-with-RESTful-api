@@ -9,6 +9,9 @@ In the command line go to the directory and run `npm install`.
 Then cd to client and run `npm install` again. 
 
 
+In the same folder run `ng build`.
+
+
 Get Back to the main directory and run `nodemon`.  
 
 
