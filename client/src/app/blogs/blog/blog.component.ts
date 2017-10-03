@@ -22,7 +22,7 @@ export class BlogComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/blogs']);
+    this.router.navigateByUrl('/blogs');
   }
 
   update(val) {
