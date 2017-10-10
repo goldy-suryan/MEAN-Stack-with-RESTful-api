@@ -12,17 +12,15 @@ export class AuthService {
   signUpUrl: string = "http://localhost:3001/auth/signup";
   loginUrl: string = "http://localhost:3001/auth/login";
   blogsUrl: string = "http://localhost:3001/allblogs/";
-  user: any;
-  data;
 
   constructor( private http: Http ) { }
 
-  signUp(data): Observable<ISignup> {
+  signUp(data): Observable<any> {
     return this.http.post(this.signUpUrl, data).map((res) => res.json()).catch(this.errorHandler);
   }
 
-  login(user): Observable<Ilogin> {
-    return this.http.post(this.loginUrl, user).map((res) => this.user = res.json()).catch(this.errorHandler);
+  login(user): Observable<any> {
+    return this.http.post(this.loginUrl, user).map((res) => res.json()).catch(this.errorHandler);
   }
 
   getBlogs(): Observable<Iblogs[]> {
@@ -46,8 +44,7 @@ export class AuthService {
   }
 
   private errorHandler(err: Response ) {
-    let msg = `error is: ${err.statusText}`
-    return Observable.throw(msg);
+    return Observable.throw(err);
   }
 
 }
