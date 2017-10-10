@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 
@@ -10,18 +10,19 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
   user: any;
   error: any;
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
 
   login(user) {
     this.authService.login(user).subscribe((user) => {
-      if(typeof Storage !== undefined) {
-        sessionStorage.setItem("user", this.authService.user.id)
+      this.user = user;
+      this.cdr.detectChanges();
+      if(typeof Storage !== undefined && user.success) {
+        sessionStorage.setItem("user", user.data._id)
+        this.router.navigate(['/home']);
       }
-      this.user = user.username;
-      this.router.navigate(['/home']);
     }, (err) => {
       this.error = err;
     });
