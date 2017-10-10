@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from "../auth.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -8,22 +9,37 @@ import { Router } from "@angular/router";
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
-  user: any;
-  error: any;
-
-  constructor(private authService: AuthService, private router: Router) { }
+  form: FormGroup;
+  user;
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      username: new FormControl(null, Validators.required),
+      email: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required)
+    })
   }
 
-  onSubmit(val) {
-    this.authService.signUp(val).subscribe((user) => {
+  onSubmit() {
+    let username = this.form.get('username').value;
+    let email = this.form.get('email').value;
+    let password = this.form.get('password').value;
+    let data = {
+      username: username,
+      email: email,
+      password: password
+    }
+
+    this.authService.signUp(data).subscribe((user) => {
       this.user = user;
-      this.router.navigate(['/home']);
-    }, (err) => {
-      this.error = err;
-    });
+      if (!user.success) {
+        this.cdr.detectChanges();
+        return false;
+      }
+      this.router.navigateByUrl('/login')
+    })
   }
+
 
 }
