@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HttpModule } from "@angular/http";
-import { FormsModule } from  "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from  "@angular/forms";
 import { CommonModule } from "@angular/common";
 
 import { HomeComponent } from "./home/home.component";
@@ -41,6 +41,7 @@ const routes: Routes = [
         HttpModule,
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule.forRoot(routes)
     ],
     exports: [RouterModule],
