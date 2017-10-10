@@ -13,7 +13,6 @@ export class BlogsComponent implements OnInit {
 
   @ViewChild('myModal') myModal: ElementRef;
   blogs: any;
-  errMsg: any;
 
   constructor(private route: ActivatedRoute, private service: AuthService, private router: Router) { }
 
@@ -23,38 +22,32 @@ export class BlogsComponent implements OnInit {
     });
   }
 
-  addBlog(val) {
-    this.service.newBlog(val).subscribe(
-      (blog) => blog,
-      (err) => err
-    );
-    this.close();
+  renavigate() {
     if (this.router.navigated === false) {
       this.router.navigateByUrl('/blogs')
     } else {
       this.router.navigateByUrl('/login').then(
         () => {
           this.router.navigateByUrl('/blogs');
-        }
-      )
+        })
     }
   }
 
+  addBlog(val) {
+    this.service.newBlog(val).subscribe(
+      (blog) => this.renavigate(),
+      (err) => err
+    );
+    this.close();
+  }
+
   deleteBlog(id) {
-    this.service.deleteblog(id).subscribe((blog) => {
-      blog
-    }, (err) => {
-      err
-    })
-    if (this.router.navigated === false) {
-      this.router.navigateByUrl('/blogs')
-    } else {
-      this.router.navigateByUrl('/login').then(
-        () => {
-          this.router.navigateByUrl('/blogs');
-        }
-      )
-    }
+    this.service.deleteblog(id).subscribe(
+      (blog) => this.renavigate(),
+      (err) => {
+        err
+      })
+
   }
 
   close() {
