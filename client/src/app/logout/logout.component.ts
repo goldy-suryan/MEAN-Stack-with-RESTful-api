@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
 
 
@@ -8,11 +7,10 @@ import { Router } from "@angular/router";
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    // this.authService.logout();
-    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("user"); // removing item from the storage so as to logout successfully
     this.router.navigate(["/login"]);
   }
 
