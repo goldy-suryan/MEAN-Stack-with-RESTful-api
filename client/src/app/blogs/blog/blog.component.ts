@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Iblogs } from "../../interfaces";
 import { AuthService } from "../../auth.service";
+import { ToastrService } from 'toastr-ng2';
 
 @Component({
   selector: 'app-blog',
@@ -12,7 +13,7 @@ export class BlogComponent implements OnInit {
 
   blog: Iblogs;
   err: any;
-  constructor( private route: ActivatedRoute, private router: Router, private service: AuthService ) { }
+  constructor( private route: ActivatedRoute, private router: Router, private service: AuthService, private toastrService: ToastrService ) { }
 
   ngOnInit() {
     //getting a single blog based on the id
@@ -29,7 +30,7 @@ export class BlogComponent implements OnInit {
   update(val) {
     let id = this.route.snapshot.paramMap.get('id');
     this.service.updateBlog(id, val).subscribe(
-      (blog) => blog,
+      (blog) => this.toastrService.success('Blog updated successfully', 'Success!'),
       (err) => this.err = err
     );
     this.goBack();

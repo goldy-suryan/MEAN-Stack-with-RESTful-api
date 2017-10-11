@@ -39,7 +39,7 @@
           </div>
           <div class="form-group">
             <label for="description">createdBy: </label>
-            <input class="form-control" name="createdBy" formControlName="createdBy" />
+            <input class="form-control" name="createdBy" formControlName="createdBy" [(ngModel)]="user"/>
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
           <button type="button" class="btn btn-default" (click)="close()">Cancel</button>

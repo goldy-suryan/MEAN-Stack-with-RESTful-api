@@ -5,6 +5,7 @@ import { Iblogs } from "../interfaces";
 import { AuthService } from "../auth.service";
 import { Subscription } from "rxjs/Subscription";
 import { SharedService } from '../shared.service';
+import { ToastrService } from 'toastr-ng2';
 
 declare let $: any;
 
@@ -21,7 +22,7 @@ export class BlogsComponent implements OnInit {
   user;
   subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private service: AuthService, private sharedService: SharedService, private router: Router, private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private service: AuthService, private sharedService: SharedService, private router: Router, private fb: FormBuilder, private cdr: ChangeDetectorRef, private toastrService: ToastrService) { }
 
   ngOnInit() {
     // Resolver to fetch the data
@@ -39,7 +40,7 @@ export class BlogsComponent implements OnInit {
     // getting the user from shared service
     this.subscription = this.sharedService.getting().subscribe(
       (user) => {
-        if (user == null) return;
+        if (user === null) return;
         this.user = user.data.username;
       }
     )
@@ -67,7 +68,10 @@ export class BlogsComponent implements OnInit {
     }
 
     this.service.newBlog(blog).subscribe(
-      (blog) => this.renavigate(),
+      (blog) => { 
+        this.renavigate();
+        this.toastrService.success('Blog added successfully', 'Success!');
+      },
       (err) => err
     );
     this.close();
@@ -75,7 +79,10 @@ export class BlogsComponent implements OnInit {
 
   deleteBlog(id) {
     this.service.deleteblog(id).subscribe(
-      (blog) => this.renavigate(),
+      (blog) => {
+        this.renavigate();
+        this.toastrService.success('Blog deleted successfully', 'Success!');
+      },
       (err) => err
     )
   }
