@@ -1,24 +1,24 @@
 export interface ISignup {
-    username: String,
-    email: String,
-    password: String
+    username: string,
+    email: string,
+    password: string
 }
 
 export interface Ilogin {
-    username: String,
-    password: String,
+    username: string,
+    password: string,
     data: Idata
 }
 
 interface Idata {
-    username: String,
-    email: String,
+    username: string,
+    email: string,
     id: Number
 }
 
 export interface Iblogs {
-    title: String,
-    description: String,
-    createdBy: String,
+    title: string,
+    description: string,
+    createdBy: string,
     date: Date
 }
