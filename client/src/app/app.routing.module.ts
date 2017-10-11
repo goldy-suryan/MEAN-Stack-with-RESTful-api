@@ -22,8 +22,8 @@ const routes: Routes = [
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
     { path: "logout", component: LogoutComponent },
-    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve } },
-    { path: "blogs/:id", component: BlogComponent, resolve: { blog: BlogResolve } },
+    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve }, canActivate: [AuthGuard] },
+    { path: "blogs/:id", component: BlogComponent, resolve: { blog: BlogResolve }, canActivate: [AuthGuard] },
     { path: "**", component: NotFoundComponent }
 ];
 
