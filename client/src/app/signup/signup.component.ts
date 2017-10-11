@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from "../auth.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class SignupComponent implements OnInit {
   form: FormGroup;
   user;
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef) { }
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = new FormGroup({
