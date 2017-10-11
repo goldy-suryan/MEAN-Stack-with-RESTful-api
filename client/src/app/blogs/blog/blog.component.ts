@@ -15,6 +15,7 @@ export class BlogComponent implements OnInit {
   constructor( private route: ActivatedRoute, private router: Router, private service: AuthService ) { }
 
   ngOnInit() {
+    //getting a single blog based on the id
     this.route.data.subscribe(
       (blog) => this.blog = blog.blog,
       (err) => this.err = err
