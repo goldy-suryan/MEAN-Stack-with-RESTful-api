@@ -32,6 +32,7 @@ blogRoute.post("/", (req, res) => {
     let newBlog = new blogs();
     newBlog.title = req.body.title;
     newBlog.description = req.body.description;
+    newBlog.createdBy = req.body.createdBy;
 
     newBlog.save((err) => {
         if(err) { res.json({ success: false, message: "Something went wrong while posting the blog"})}
