@@ -29,7 +29,7 @@ export class BlogComponent implements OnInit {
 
   update(val) {
     let id = this.route.snapshot.paramMap.get('id');
-    this.service.updateBlog(id, val).subscribe(
+    this.service.update(id, val).subscribe(
       (blog) => this.toastrService.success('Blog updated successfully', 'Success!'),
       (err) => this.err = err
     );

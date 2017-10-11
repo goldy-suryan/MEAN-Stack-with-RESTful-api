@@ -10,7 +10,7 @@ export class BlogResolve implements Resolve<any>{
 
   resolve(route: ActivatedRouteSnapshot) {
     let id = route.paramMap.get('id');
-    return this.service.getBlog(id);
+    return this.service.getOne(id);
   }
 
 }

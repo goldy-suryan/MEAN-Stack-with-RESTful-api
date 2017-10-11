@@ -67,7 +67,7 @@ export class BlogsComponent implements OnInit {
       createdBy: createdBy
     }
 
-    this.service.newBlog(blog).subscribe(
+    this.service.create(blog).subscribe(
       (blog) => { 
         this.renavigate();
         this.toastrService.success('Blog added successfully', 'Success!');
@@ -78,7 +78,7 @@ export class BlogsComponent implements OnInit {
   }
 
   deleteBlog(id) {
-    this.service.deleteblog(id).subscribe(
+    this.service.delete(id).subscribe(
       (blog) => {
         this.renavigate();
         this.toastrService.success('Blog deleted successfully', 'Success!');

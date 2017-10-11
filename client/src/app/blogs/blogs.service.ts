@@ -12,7 +12,7 @@ export class BlogsServiceResolve implements Resolve<Iblogs[]> {
 
   constructor(private service: AuthService) { }
   resolve(route: ActivatedRouteSnapshot): Observable<Iblogs[]> {
-    return this.service.getBlogs();
+    return this.service.getAll();
   }
 
 }
