@@ -1,3 +1,4 @@
+import { SharedService } from './shared.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from "./app.routing.module";
@@ -12,7 +13,6 @@ import { BlogResolve } from "./blogs/blog/blog.service";
   declarations: [
     AppComponent,
     NavbarComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -21,7 +21,8 @@ import { BlogResolve } from "./blogs/blog/blog.service";
   providers: [
     AuthService,
     BlogsServiceResolve,
-    BlogResolve
+    BlogResolve,
+    SharedService
   ],
   bootstrap: [AppComponent]
 })
