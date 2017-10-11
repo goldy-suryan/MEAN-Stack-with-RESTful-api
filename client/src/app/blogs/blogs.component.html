@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!reRender">
+<div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="p-xxs">
@@ -11,8 +11,8 @@
           <p><strong>Created By: </strong>{{ blog.createdBy }}</p>
           <p><strong>Date: </strong>{{ blog.date | date:"yMd"}}</p>
           <div>
-            <a class="btn btn-primary" [routerLink]="['/blogs', blog._id]">Edit</a>
-            <a class="btn btn-danger" (click)="deleteBlog(blog._id)">Delete</a>
+            <a class="btn btn-primary" [routerLink]="['/blogs', blog._id]" *ngIf="user === blog.createdBy">Edit</a>
+            <a class="btn btn-danger" (click)="deleteBlog(blog._id)" *ngIf="user === blog.createdBy">Delete</a>
           </div>
         </div>
       </div>
@@ -28,20 +28,22 @@
         <h4 class="modal-title">New Blog</h4>
       </div>
       <div class="modal-body">
-        <form #blogForm="ngForm">
+        <form [formGroup]="blogForm" (ngSubmit)="addBlog()">
           <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" name="title" class="form-control" ngModel>
+            <input type="text" name="title" class="form-control" formControlName="title" />
           </div>
           <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" name="description" rows="5" id="comment" ngModel></textarea>
+            <textarea class="form-control" name="description" rows="5" formControlName="description"></textarea>
           </div>
+          <div class="form-group">
+            <label for="description">createdBy: </label>
+            <input class="form-control" name="createdBy" formControlName="createdBy" />
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button>
+          <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="addBlog(blogForm.value)">Post</button>
-        <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
       </div>
     </div>
   </div>
