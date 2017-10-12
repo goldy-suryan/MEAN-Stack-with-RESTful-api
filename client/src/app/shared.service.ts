@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class SharedService {
     isLogin = new BehaviorSubject<any>(null)
 
-    getting() {
+    getUser() {
         return this.isLogin.asObservable();
     }
 
