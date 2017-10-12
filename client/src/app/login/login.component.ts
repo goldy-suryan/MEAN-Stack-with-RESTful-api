@@ -1,3 +1,6 @@
+import { ToastrService } from 'toastr-ng2';
+import { BadRequestError } from './../Errors/badRequestError';
+import { AppError } from './../Errors/app.error';
 import { SharedService } from './../shared.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from "../auth.service";
@@ -11,7 +14,7 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
   user: any;
   error: any;
-  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef, private sharedService: SharedService) { }
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef, private sharedService: SharedService, private toastrService: ToastrService) { }
 
   ngOnInit() {
   }
@@ -25,8 +28,10 @@ export class LoginComponent implements OnInit {
         this.sharedService.send(this.user); // sending the user data along, so as to used by other components too
         this.router.navigate(['/home']);
       }
-    }, (err) => {
-      this.error = err;
+    }, (err: AppError) => {
+          if(err instanceof BadRequestError) 
+            this.toastrService.error("Bad Request", "Error");
+          this.toastrService.error("An unexpected error occured", "Error")
     });
   }
 }
