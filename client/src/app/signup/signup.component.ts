@@ -1,3 +1,6 @@
+import { ToastrService } from 'toastr-ng2';
+import { BadRequestError } from './../Errors/badRequestError';
+import { AppError } from './../Errors/app.error';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from "../auth.service";
 import { Router } from "@angular/router";
@@ -9,9 +12,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+
   form: FormGroup;
   user;
-  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) { }
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -38,7 +42,11 @@ export class SignupComponent implements OnInit {
         return false;
       }
       this.router.navigateByUrl('/login')
-    })
+    }, (err: AppError) => {
+      if(err instanceof BadRequestError) 
+        this.toastrService.error("Bad Request", "Error");
+      this.toastrService.error("An unexpected error occured", "Error")
+})
   }
 
 

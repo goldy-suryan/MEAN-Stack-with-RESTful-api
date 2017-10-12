@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
-    this.sharedService.getting().subscribe(
+    this.sharedService.getUser().subscribe(
       (user) => this.username = user
     )
   }
