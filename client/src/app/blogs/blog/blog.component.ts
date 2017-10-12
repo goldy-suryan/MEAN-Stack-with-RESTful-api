@@ -1,3 +1,6 @@
+import { BadRequestError } from './../../Errors/badRequestError';
+import { NotFoundError } from './../../Errors/notFoundError';
+import { AppError } from './../../Errors/app.error';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Iblogs } from "../../interfaces";
@@ -19,7 +22,11 @@ export class BlogComponent implements OnInit {
     //getting a single blog based on the id
     this.route.data.subscribe(
       (blog) => this.blog = blog.blog,
-      (err) => this.err = err
+      (err: AppError) => {
+        if(err instanceof NotFoundError) 
+          this.toastrService.error("Not Found", "Error");
+        this.toastrService.error("An unexpected error occured", "Error");
+      }
     )
   }
 
@@ -31,7 +38,12 @@ export class BlogComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.service.update(id, val).subscribe(
       (blog) => this.toastrService.success('Blog updated successfully', 'Success!'),
-      (err) => this.err = err
+      (err: AppError) => {
+        if(err instanceof BadRequestError) {
+          this.toastrService.error("Bad Request", "Error")
+        this.toastrService.error("An unexpected error occured", "Error")
+        }
+      }
     );
     this.goBack();
   }

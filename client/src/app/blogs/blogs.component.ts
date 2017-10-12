@@ -1,3 +1,6 @@
+import { BadRequestError } from './../Errors/badRequestError';
+import { NotFoundError } from './../Errors/notFoundError';
+import { AppError } from './../Errors/app.error';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
@@ -28,6 +31,11 @@ export class BlogsComponent implements OnInit {
     // Resolver to fetch the data
     this.route.data.subscribe((blogs) => {
       this.blogs = blogs.blogs;
+    }, (err: AppError) => {
+      if(err instanceof NotFoundError) {
+        this.toastrService.error("Not Found", "Error")
+      }
+      this.toastrService.error(err.originalError, "Error");
     });
 
     // creating the instance of formGroup with formBuilder
@@ -38,7 +46,7 @@ export class BlogsComponent implements OnInit {
     })
 
     // getting the user from shared service
-    this.subscription = this.sharedService.getting().subscribe(
+    this.subscription = this.sharedService.getUser().subscribe(
       (user) => {
         if (user === null) return;
         this.user = user.data.username;
@@ -72,7 +80,12 @@ export class BlogsComponent implements OnInit {
         this.renavigate();
         this.toastrService.success('Blog added successfully', 'Success!');
       },
-      (err) => err
+      (err: AppError) => {
+        if(err instanceof BadRequestError) {
+          this.toastrService.error("Bad Request", "Error");
+        }
+        else  this.toastrService.error("An unexpected error occured", "Error");
+      }
     );
     this.close();
   }
@@ -83,7 +96,12 @@ export class BlogsComponent implements OnInit {
         this.renavigate();
         this.toastrService.success('Blog deleted successfully', 'Success!');
       },
-      (err) => err
+      (err) => {
+        if(err instanceof BadRequestError) {
+          this.toastrService.error("Bad Request", "Error");
+        }
+        else  this.toastrService.error("An unexpected error occured", "Error");
+      }
     )
   }
 
