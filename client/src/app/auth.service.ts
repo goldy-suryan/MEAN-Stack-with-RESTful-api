@@ -18,10 +18,10 @@ export class AuthService extends DataService{
    }
 
   signUp(data): Observable<any> {
-    return this.http.post(this.signUpUrl, data).map((res) => res.json());
+    return this.http.post(this.signUpUrl, data).map((res) => res.json()).catch(this.errorHandler);
   }
 
   login(user): Observable<any> {
-    return this.http.post(this.loginUrl, user).map((res) => res.json());
+    return this.http.post(this.loginUrl, user).map((res) => res.json()).catch(this.errorHandler);
   }
 }
