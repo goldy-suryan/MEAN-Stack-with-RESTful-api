@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+body, html {
+    height: 100%;
+}
+
+.bg-login { 
+    background-image: url("assets/images/secure.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-signup { 
+    background-image: url("assets/images/sign-up.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+label, h2.text-center {
+    color: white;
+}
+
+#myModal label {
+    color: #000000;
+}
+
+.page-header {
+    margin-top: 120px;
+}
