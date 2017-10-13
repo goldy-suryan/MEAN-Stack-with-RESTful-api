@@ -1,4 +1,3 @@
-import { SharedService } from './shared.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from "./app.routing.module";
@@ -25,8 +24,7 @@ import { ToastrModule } from 'toastr-ng2';
   providers: [
     AuthService,
     BlogsServiceResolve,
-    BlogResolve,
-    SharedService
+    BlogResolve
   ],
   bootstrap: [AppComponent]
 })
