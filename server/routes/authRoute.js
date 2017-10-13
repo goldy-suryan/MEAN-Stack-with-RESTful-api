@@ -4,16 +4,18 @@ let passport = require("passport");
 const User = require("../model/usermodel").userModel;
 let bcrypt = require("bcrypt");
 let saltRounds = 10;
+let jwt = require("jsonwebtoken");
 
 route.post("/signup", (req, res, next) => {
-    User.findOne({ $or: [{ username: req.body.username}, { email: req.body.email }] }, (err, user) => {
+    User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] }, (err, user) => {
 
-        if(err) {
+        if (err) {
             return res.json(err);
         }
 
-        if (user) { 
-            return res.json({ success: false, message: "user already exists" }) }
+        if (user) {
+            return res.json({ success: false, message: "user already exists" })
+        }
 
         if (!user) {
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
@@ -38,7 +40,17 @@ route.post("/login", (req, res, next) => {
 
         if (!user) { return res.json({ success: false, message: "Username or Password doesn't match" }) }
 
-        res.json({ success: true, message: "logged in Successfully", data: user });
+        if (user) {
+            let payload = {
+                user: user
+            }
+
+            let token = jwt.sign(payload, "any secret message", {
+                expiresIn: 1400 * 60
+            });
+            // req.session.save();
+            res.json({ success: true, message: "logged in Successfully", data: user, token: token });
+        }
     })(req, res, next);
 });
 
