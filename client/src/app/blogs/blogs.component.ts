@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Iblogs } from "../interfaces";
 import { AuthService } from "../auth.service";
 import { Subscription } from "rxjs/Subscription";
-import { SharedService } from '../shared.service';
 import { ToastrService } from 'toastr-ng2';
 
 declare let $: any;
@@ -25,33 +24,30 @@ export class BlogsComponent implements OnInit {
   user;
   subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private service: AuthService, private sharedService: SharedService, private router: Router, private fb: FormBuilder, private cdr: ChangeDetectorRef, private toastrService: ToastrService) { }
+  constructor(private route: ActivatedRoute, private service: AuthService, private router: Router, private fb: FormBuilder, private cdr: ChangeDetectorRef, private toastrService: ToastrService) { }
 
   ngOnInit() {
     // Resolver to fetch the data
-    this.route.data.subscribe((blogs) => {
-      this.blogs = blogs.blogs;
-    }, (err: AppError) => {
-      if(err instanceof NotFoundError) {
-        this.toastrService.error("Not Found", "Error")
-      }
-      this.toastrService.error(err.originalError, "Error");
-    });
+    this.route.data.subscribe(
+      (blogs) => {
+        this.blogs = (blogs.blogs).reverse()
+      },
+      (err: AppError) => {
+        if (err instanceof NotFoundError) {
+          this.toastrService.error("Not Found", "Error")
+        }
+        this.toastrService.error("An unexpected error occured", "Error");
+      });
 
     // creating the instance of formGroup with formBuilder
     this.blogForm = this.fb.group({
       title: '',
       description: '',
-      createdBy: this.user
-    })
+      createdBy: this.service.CurrentUser.user.username
+    });
 
-    // getting the user from shared service
-    this.subscription = this.sharedService.getUser().subscribe(
-      (user) => {
-        if (user === null) return;
-        this.user = user.data.username;
-      }
-    )
+    this.user = this.service.CurrentUser.user.username;  // getting the current user
+
   }
 
   renavigate() {
@@ -76,15 +72,15 @@ export class BlogsComponent implements OnInit {
     }
 
     this.service.create(blog).subscribe(
-      (blog) => { 
+      (blog) => {
         this.renavigate();
         this.toastrService.success('Blog added successfully', 'Success!');
       },
       (err: AppError) => {
-        if(err instanceof BadRequestError) {
+        if (err instanceof BadRequestError) {
           this.toastrService.error("Bad Request", "Error");
         }
-        else  this.toastrService.error("An unexpected error occured", "Error");
+        else this.toastrService.error("An unexpected error occured", "Error");
       }
     );
     this.close();
@@ -97,10 +93,10 @@ export class BlogsComponent implements OnInit {
         this.toastrService.success('Blog deleted successfully', 'Success!');
       },
       (err) => {
-        if(err instanceof BadRequestError) {
+        if (err instanceof BadRequestError) {
           this.toastrService.error("Bad Request", "Error");
         }
-        else  this.toastrService.error("An unexpected error occured", "Error");
+        else this.toastrService.error("An unexpected error occured", "Error");
       }
     )
   }

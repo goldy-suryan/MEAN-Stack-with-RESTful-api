@@ -11,7 +11,7 @@
           <p><strong>Created By: </strong>{{ blog.createdBy }}</p>
           <p><strong>Date: </strong>{{ blog.date | date:"yMd"}}</p>
           <div>
-            <a class="btn btn-primary" [routerLink]="['/blogs', blog._id]" *ngIf="user === blog.createdBy">Edit</a>
+            <a class="btn btn-primary" [routerLink]="['/blogs', blog._id, blog.createdBy]" *ngIf="user === blog.createdBy">Edit</a>
             <a class="btn btn-danger" (click)="deleteBlog(blog._id)" *ngIf="user === blog.createdBy">Delete</a>
           </div>
         </div>
@@ -39,7 +39,7 @@
           </div>
           <div class="form-group">
             <label for="description">createdBy: </label>
-            <input class="form-control" name="createdBy" formControlName="createdBy" [(ngModel)]="user"/>
+            <input class="form-control" name="createdBy" formControlName="createdBy" value="{{ service.CurrentUser.user.username }}"/>
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
           <button type="button" class="btn btn-default" (click)="close()">Cancel</button>

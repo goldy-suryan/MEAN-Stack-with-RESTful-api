@@ -16,7 +16,10 @@ export class BlogComponent implements OnInit {
 
   blog: Iblogs;
   err: any;
-  constructor( private route: ActivatedRoute, private router: Router, private service: AuthService, private toastrService: ToastrService ) { }
+  constructor( private route: ActivatedRoute, 
+               private router: Router, 
+               private service: AuthService, 
+               private toastrService: ToastrService ) { }
 
   ngOnInit() {
     //getting a single blog based on the id
