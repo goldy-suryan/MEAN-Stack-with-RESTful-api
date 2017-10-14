@@ -1,4 +1,3 @@
-import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
@@ -7,7 +6,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/Observable/throw";
 import { Observable } from "rxjs/Observable";
-import { ISignup, Ilogin, Iblogs } from "./interfaces";
+import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 
 @Injectable()
 export class AuthService extends DataService{
@@ -26,6 +25,20 @@ export class AuthService extends DataService{
   login(user): Observable<any> {
     return this.http.post(this.loginUrl, user).map((res) => res.json()).catch(this.errorHandler);
   }
+
+  isLoggedIn() {
+      // return tokenNotExpired(); // exactly what we did below, provided by angular
+  
+      let jwt = new JwtHelper();
+  
+      let token = sessionStorage.getItem("user");
+      if (!token) return false;
+  
+      let date = jwt.getTokenExpirationDate(token);
+      let isExpired = jwt.isTokenExpired(token);
+  
+      return !isExpired;
+    }
 
   logOut() {
     sessionStorage.removeItem("user");
