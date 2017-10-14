@@ -1,3 +1,4 @@
+import { BlogsGuard } from './blogs/blogs-auth-guard';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HttpModule } from "@angular/http";
@@ -20,8 +21,8 @@ const routes: Routes = [
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
-    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve }, canActivate: [AuthGuard] },
-    { path: "blogs/:id/:username", component: BlogComponent, resolve: { blog: BlogResolve }, canActivate: [AuthGuard] },
+    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve }, canActivate: [AuthGuard, BlogsGuard] },
+    { path: "blogs/:id/:username", component: BlogComponent, resolve: { blog: BlogResolve }, canActivate: [AuthGuard, BlogsGuard] },
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -43,7 +44,8 @@ const routes: Routes = [
     ],
     exports: [RouterModule],
     providers: [
-        AuthGuard
+        AuthGuard,
+        BlogsGuard
     ]
 })
 
