@@ -21,8 +21,8 @@ const routes: Routes = [
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
-    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve }, canActivate: [AuthGuard, BlogsGuard] },
-    { path: "blogs/:id/:username", component: BlogComponent, resolve: { blog: BlogResolve }, canActivate: [AuthGuard, BlogsGuard] },
+    { path: "blogs", component: BlogsComponent, resolve: { blogs: BlogsServiceResolve }, canActivate: [AuthGuard] },
+    { path: "blogs/:id/:username", component: BlogComponent, resolve: { blog: BlogResolve }, canActivate: [AuthGuard] },
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -45,7 +45,8 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [
         AuthGuard,
-        BlogsGuard
+        BlogsGuard  // add this guard whenever you want route to be protected according to user's role
+                    // server code should be modified accordingly
     ]
 })
 
