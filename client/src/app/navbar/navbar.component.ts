@@ -1,6 +1,5 @@
 import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
-import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 
 declare let $: any;
 
@@ -18,19 +17,4 @@ export class NavbarComponent implements OnInit {
       $(".navbar-collapse").collapse('hide');
     });
   }
-
-  isLoggedIn() {
-    // return tokenNotExpired(); // exactly what we did below, provided by angular
-
-    let jwt = new JwtHelper();
-
-    let token = sessionStorage.getItem("user");
-    if (!token) return false;
-
-    let date = jwt.getTokenExpirationDate(token);
-    let isExpired = jwt.isTokenExpired(token);
-
-    return !isExpired;
-  }
-
 }
