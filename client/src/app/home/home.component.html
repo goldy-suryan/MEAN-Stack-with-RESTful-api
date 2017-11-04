@@ -4,64 +4,14 @@
   </div>
   <h2 *ngIf="username">Welcome {{ username }}!!!</h2>
 
-  <div class="col-md-4">
+  <div class="col-md-4" *ngFor="let subject of subjects">
     <div class="panel panel-primary">
       <div class="panel-heading text-center">
-        MongoDB
+        {{ subject }}
       </div>
       <div class="panel-body">
          lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-        Express
-      </div>
-      <div class="panel-body">
-         lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-        Angular 2 (4)
-      </div>
-      <div class="panel-body">
-         lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-        Node.js
-      </div>
-      <div class="panel-body">
-         lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-         lorem ipsum
-      </div>
-      <div class="panel-body">
-         lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading text-center">
-         lorem ipsum
-      </div>
-      <div class="panel-body">
-         lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset. lorem ipsum dolar isset.  lorem ipsum dolar isset.  lorem ipsum dolar isset.
-      </div>
-    </div>
-  </div>
-</div>
+</div>  
